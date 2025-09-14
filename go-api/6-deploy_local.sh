@@ -21,9 +21,19 @@ else
     CLEANUP_CLUSTER=true
 fi
 
+# Load the Docker image into the kind cluster
 kind load docker-image go-api:latest -n test-cluster
+
+# Set kube context to the kind cluster
 kubectl cluster-info --context kind-test-cluster
+
+# Install ingress controller and metrics server
 kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/deploy-ingress-nginx.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+kubectl -n kube-system patch deployment metrics-server \
+  --type='json' \
+  -p='[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"}]'
+
 
 # Wait for ingress-nginx controller to be ready
 echo "Waiting for ingress-nginx-controller to be ready..."
