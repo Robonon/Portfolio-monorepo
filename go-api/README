@@ -1,0 +1,6 @@
+depends on:
+- Golang sdk
+- Docker
+- kind
+- kubectl
+- helm

@@ -81,3 +81,16 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+llm:
+  name: "ollama"
+  image: "ollama/ollama"
+  port: 11434
+  model: "gemma3:latest"
+
+mountPath: "/output"
+
+config:
+  # EXAMPLE_ENV_VAR: "value"
+  LOG_LEVEL: "info"
+  LLM_URL: "ollama.default.svc.cluster.local:11434/api/generate"

@@ -2,6 +2,8 @@ package main
 
 import (
 	"api/calculations"
+	"api/config"
+	"api/llm"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -12,28 +14,10 @@ type API struct {
 	logger *slog.Logger
 }
 
-type Config struct {
-	LogLevel string
-	Port     string
-}
-
-func getConfig() (*Config, error) {
-	var c = Config{}
-	c.LogLevel = os.Getenv("LOG_LEVEL")
-	if c.LogLevel == "" {
-		c.LogLevel = "info"
-	}
-	c.Port = os.Getenv("PORT")
-	if c.Port == "" {
-		c.Port = "8080"
-	}
-	return &c, nil
-}
-
 func main() {
-	cfg, _ := getConfig()
+	cfg := config.GetConfig()
 	api := &API{
-		logger: setupLogger(),
+		logger: setupLogger(cfg),
 	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -44,13 +28,42 @@ func main() {
 	http.HandleFunc("/calculations/reverse", calculations.ReverseHandler(api.logger))
 	http.HandleFunc("/calculations/countUnique", calculations.CountUniqueHandler(api.logger))
 
+	// LLM related endpoints
+	http.HandleFunc("/generate-module", llm.GenerateModuleHandler(api.logger))
+	http.Handle("/download/", http.StripPrefix("/download/", http.FileServer(http.Dir("/output"))))
+
 	api.logger.Info(fmt.Sprintf("Starting server on :%v", cfg.Port), "port", cfg.Port)
 	http.ListenAndServe(fmt.Sprintf(":%v", cfg.Port), nil)
 }
 
-func setupLogger() *slog.Logger {
-	jsonHandler := slog.NewJSONHandler(os.Stderr, nil)
-	apislog := slog.New(jsonHandler)
-	apislog.Info("logger configured")
+func setupLogger(cfg *config.Config) *slog.Logger {
+	hostname, err := os.Hostname()
+	if err != nil {
+		hostname = "unknown"
+	}
+
+	var level slog.Level
+	switch cfg.LogLevel {
+	case "DEBUG":
+		level = slog.LevelDebug
+	case "INFO":
+		level = slog.LevelInfo
+	case "WARN":
+		level = slog.LevelWarn
+	case "ERROR":
+		level = slog.LevelError
+	default:
+		level = slog.LevelInfo
+	}
+
+	var handler slog.Handler
+	if cfg.LogFormat == "JSON" {
+		handler = slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{Level: level})
+	} else {
+		handler = slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: level})
+	}
+
+	apislog := slog.New(handler).With("pod", "API").With("hostname", hostname)
+	apislog.Info("logger configured", "level", level, "pod", "API", "hostname", hostname, "format", cfg.LogFormat)
 	return apislog
 }

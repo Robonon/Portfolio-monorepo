@@ -1,10 +1,10 @@
 #!/bin/bash
 
-PORT=8080
+PORT=9999
 PASS=true
 echo "Starting integration tests on port $PORT"
 echo "Creating and running Docker container..."
-docker run -d -p $PORT:$PORT go-api:latest
+docker run -e PORT=$PORT -d -p $PORT:$PORT go-api:latest
 
 curl -s -X GET http://localhost:$PORT -w "\n"
 

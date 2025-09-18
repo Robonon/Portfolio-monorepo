@@ -50,4 +50,6 @@ helm upgrade --install go-api ./chart --kube-context kind-test-cluster
 # If everything succeeds, you can optionally unset cleanup
 trap - ERR
 
-kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80
+sleep 5
+start cmd "/k kubectl logs -f --tail=100 -l app --all-containers=true"
+start cmd "/k kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80"
