@@ -1,0 +1,134 @@
+{
+  "EvaluationSchema": {
+    "type": "object",
+    "properties": {
+      "feedback": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "issue": {
+              "type": "string"
+            },
+            "suggestion": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "issue",
+            "suggestion"
+          ]
+        }
+      },
+      "pass": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "feedback",
+      "pass"
+    ]
+  },
+  "ArchitectureSchema": {
+    "type": "object",
+    "properties": {
+      "packages": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "responsibility": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "responsibility"
+          ]
+        }
+      },
+      "diagram": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "filepaths": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "packages",
+      "diagram",
+      "summary",
+      "filepaths"
+    ]
+  },
+  "InterfacesSchema": {
+    "type": "object",
+    "properties": {
+      "interfaces": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "methods": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "methods",
+            "description"
+          ]
+        }
+      }
+    },
+    "required": [
+      "interfaces"
+    ]
+  },
+  "UnitTestsSchema": {},
+  "IntegrationSchema": {},
+  "DocumentationSchema": {
+    "type": "object",
+    "properties": {
+      "documentation": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "section": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "section",
+            "content"
+          ]
+        }
+      }
+    },
+    "required": [
+      "documentation"
+    ]
+  }
+}

@@ -50,6 +50,8 @@ helm upgrade --install go-api ./chart --kube-context kind-test-cluster
 # If everything succeeds, you can optionally unset cleanup
 trap - ERR
 
-sleep 5
-start cmd "/k kubectl logs -f --tail=100 -l app --all-containers=true"
+kubectl wait --namespace default --for=condition=Ready pod --selector=app=go-api --timeout=120s
+start cmd "/k kubectl logs -f -l app=go-api --all-containers=true"
+kubectl wait --namespace default --for=condition=Ready pod --selector=app=ollama --timeout=120s
+start cmd "/k kubectl logs -f -l app=ollama --all-containers=true"
 start cmd "/k kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80"

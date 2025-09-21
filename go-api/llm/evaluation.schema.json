@@ -1,9 +1,0 @@
-{
-  "type": "object",
-  "properties": {
-    "issues": { "type": "string" },
-    "suggestions": { "type": "string" },
-    "pass": { "type": "boolean" }
-  },
-  "required": ["issues", "suggestions", "pass"]
-}

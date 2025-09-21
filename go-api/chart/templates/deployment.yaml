@@ -36,6 +36,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.fullnameOverride }}-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -69,12 +72,3 @@ spec:
         - name: code-output
           hostPath:
             path: {{ .Values.mountPath }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "go-api.fullname" . }}-config
-data:
-  {{ with .Values.config }}
-    {{- toYaml . | nindent 2 }}
-  {{- end }}
