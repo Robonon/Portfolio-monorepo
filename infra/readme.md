@@ -22,6 +22,3 @@ requires:
 
 run:
 - create-kind-cluster.sh
-
-## TODO
-- install argocd in cluster

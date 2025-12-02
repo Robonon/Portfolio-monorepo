@@ -2407,10 +2407,10 @@ server:
 
     # -- Argo CD server hostname
     # @default -- `""` (defaults to global.domain)
-    hostname: ""
+    hostname: "localhost"
 
     # -- The path to Argo CD server
-    path: /
+    path: /argocd
 
     # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
     pathType: Prefix
