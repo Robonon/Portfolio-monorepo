@@ -419,4 +419,5 @@ FodyWeavers.xsd
 
 # Terraform
 *.tfstate
+*.tfstate.backup
 **/.terraform/
