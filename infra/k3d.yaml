@@ -1,0 +1,24 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+# network: home-network
+metadata:
+ name: home-cluster
+servers: 1
+agents: 2
+image: rancher/k3s:v1.32.2-k3s1
+kubeAPI: # same as `--api-port 127.0.0.1:6445`
+ hostIP: "127.0.0.1"
+ hostPort: "6445"
+ports:
+ - port: 8080:80 # same as `--port 8080:80@loadbalancer
+   nodeFilters:
+    - loadbalancer
+env:
+  - envVar: "K3S_URL=https://host.docker.internal:6445"
+    nodeFilters:
+      - agent:*
+# hostAliases:
+#   - ip: "127.0.0.1"
+#     hostnames:
+#       - "host.docker.internal"
+#       - "localhost"
