@@ -1,0 +1,39 @@
+{{ block "oob-services" . }}
+<ul>
+    <li>
+        <button hx-get="/service-info?name=serviceA" hx-target="#service-info" hx-swap="innerHTML">
+            Service A
+        </button>
+    </li>
+    <li>
+        <button hx-get="/service-info?name=serviceB" hx-target="#service-info" hx-swap="innerHTML">
+            Service B
+        </button>
+    </li>
+</ul>
+{{ end }}
+
+{{ block "oob-service-info" .ServiceInfo }}
+<p>
+    {{ .Description }}
+    {{ .PodCount }}
+    {{ range .Logs }}
+    <ul>
+        <li>
+            {{ . }}
+        </li>
+    </ul>
+    {{ end}}
+</p>
+{{ end }}
+
+{{ block "oob-service-lib" .ServiceLib }}
+<ul>
+    {{ range .Services }}
+    <li>
+        {{ . }}
+    </li>
+    {{ end }}
+</ul>
+
+{{ end }}

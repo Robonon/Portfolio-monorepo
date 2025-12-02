@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: service-lib-ingress
+  labels:
+    app.kubernetes.io/name: service-lib
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: "localhost"
+      http:
+        paths:
+{{- range .Values.serviceLib }}
+{{- if .ingress }}
+          - path: /{{ .name }}/
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .name }}
+                port:
+                  number: {{ .port }}
+{{- end }}
+{{- end }}

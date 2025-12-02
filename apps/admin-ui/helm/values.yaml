@@ -1,0 +1,36 @@
+serviceLib: 
+  api:
+    ingress: true
+    name: api
+    port: 8080
+    image: my-api-image:latest
+
+  ui:
+    ingress: true
+    name: ui
+    port: 8080
+    image: ui-image:latest
+  
+  mcpClient:
+    ingress: false
+    name: mcp-client
+    port: 8080
+    image: mcp-client-image:latest
+
+  mcpServer:
+    ingress: false
+    name: mcp-server
+    port: 8080
+    image: my-mcp-server-image:latest
+
+  tpl:
+    ingress: false
+    name: tpl
+    port: 8080
+    image: my-tpl-image:latest
+  
+  gitServer:
+    ingress: false
+    name: git-server
+    port: 8080
+    image: mcp/git:latest

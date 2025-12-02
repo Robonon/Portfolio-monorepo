@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.llm.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.llm.name }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: {{ .Values.llm.name }}
+    spec:
+      containers:
+        - name: ollama
+          image: {{ .Values.llm.image }}
+          ports:
+            - containerPort: {{ .Values.llm.port }}
+          volumeMounts:
+            - name: {{ .Values.llm.name }}-data
+              mountPath: /root/.ollama
+      volumes:
+        - name: {{ .Values.llm.name }}-data
+          persistentVolumeClaim:
+            claimName: ollama-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.llm.name }}-service
+spec:
+  type: NodePort
+  ports:
+    - port: {{ .Values.llm.port }}
+      targetPort: {{ .Values.llm.port }}
+      nodePort: 31434
+  selector:
+    app: {{ .Values.llm.name }}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ollama-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: standard
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ollama-model-loader
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - name: model-loader
+        image: curlimages/curl:latest
+        command:
+        - sh
+        - -c
+        - |
+          # Wait for Ollama service
+          until curl -f http://{{ .Values.llm.name }}-service:11434/api/version; do
+            echo "Waiting for {{ .Values.llm.name }}..."
+            sleep 5
+          done
+          
+          # Pull essential models
+          curl -X POST http://{{ .Values.llm.name }}-service:11434/api/pull \
+            -H "Content-Type: application/json" \
+            -d '{"name": "gemma3:latest"}'
+          
+      restartPolicy: OnFailure
+  backoffLimit: 3

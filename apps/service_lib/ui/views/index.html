@@ -1,0 +1,53 @@
+{{ define "header" }}
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTMX with Go</title>
+  <!-- <script src="static/htmx.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
+    integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
+    crossorigin="anonymous"></script>
+</head>
+
+{{ end }}
+
+
+{{ define "index" }}
+
+
+{{ template "header" }}
+
+<body>
+  <div style="display:flex; flex-direction: row; gap: 1rem;">
+    <div style="flex:1">
+      <h1>Services</h1>
+      <div id="services">
+        {{ template "oob-services" }}
+      </div>
+    </div>
+    <div style="flex:1">
+      <h1>Service Info</h1>
+      <div id="service-info">
+        {{ template "oob-service-info" }}
+      </div>
+    </div>
+    <div style="flex:1">
+      <h1>Service Library</h1>
+      <div id="service-lib" hx-trigger="load" hx-get="/service-lib" hx-target="#service-lib" hx-swap="innerHTML">
+        Loading...
+        {{ template "oob-service-lib" }}
+      </div>
+    </div>
+  </div>
+  {{ template "footer" }}
+</body>
+
+
+</html>
+{{ end }}
+
+{{ define "footer" }}
+<footer style="">
+  footer here
+</footer>
+{{ end }}

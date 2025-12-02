@@ -1,0 +1,112 @@
+{
+  "EvaluationSchema": {
+    "type": "object",
+    "properties": {
+      "feedback": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "issue": {
+              "type": "string"
+            },
+            "suggestion": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "issue",
+            "suggestion"
+          ]
+        }
+      },
+      "pass": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "feedback",
+      "pass"
+    ]
+  },
+  "ArchitectureSchema": {
+    "type": "object",
+    "properties": {
+      "packages": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "responsibility": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "responsibility"
+          ]
+        }
+      },
+      "summary": {
+        "type": "string"
+      },
+      "directoryPaths": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "packages",
+      "summary",
+      "directoryPaths"
+    ]
+  },
+  "InterfaceSchema": {
+    "type": "object",
+    "properties": {
+      "filePath": {
+        "type": "string"
+      },
+      "code": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "filePath",
+      "code"
+    ]
+  },
+  "UnitTestsSchema": {},
+  "IntegrationSchema": {},
+  "DocumentationSchema": {
+    "type": "object",
+    "properties": {
+      "documentation": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "section": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "section",
+            "content"
+          ]
+        }
+      }
+    },
+    "required": [
+      "documentation"
+    ]
+  }
+}
