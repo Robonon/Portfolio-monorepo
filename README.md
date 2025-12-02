@@ -47,43 +47,13 @@ Ingress -> Ops ui       ->
 resources: 
 
 ## Repo structure
+Each folder contains it's own readme, explaining details about it's content
+
 repo/
 ├── infra/                        # Terraform (cloud + cluster)
-│   ├── global/                   # org-level resources (DNS, accounts, S3 buckets)
-│   ├── envs/
-│   │   ├── dev/
-│   │   ├── staging/
-│   │   └── prod/
-│   └── modules/                  # Terraform reusable modules
-│
 ├── platform/                     # Everything running *on* the cluster (Ops layer)
-│   ├── helm/                     # Helm charts for platform components
-│   ├── kustomize/                # (optional) if you prefer Kustomize for operators
-│   ├── addons/
-│   │   ├── ingress-nginx/
-│   │   ├── cert-manager/
-│   │   ├── metrics-server/
-│   │   ├── external-dns/
-│   │   ├── argocd/
-│   │   └── logging/              # Loki, Grafana, etc
-│   └── values/                   # environment-specific overrides for platform charts
-│
 ├── apps/                         # Applications developed by you
-│   ├── service-a/
-│   │   ├── src/
-│   │   ├── Dockerfile
-│   │   ├── charts/               # Helm chart for this service
-│   │   └── values/
-│   ├── service-b/
-│   └── shared/                   # shared libs, templates, configs
-│
 ├── environments/                 # GitOps definitions (if using ArgoCD/Flux)
-│   ├── dev/
-│   │   ├── apps/
-│   │   └── platform/
-│   ├── staging/
-│   └── prod/
-│
 ├── ci/                           # CI/CD workflows (GitHub Actions, GitLab, etc)
 └── scripts/                      # helper scripts (bootstrap, linting, local dev)
 
