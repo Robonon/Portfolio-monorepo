@@ -1,11 +1,6 @@
 ├── platform/                     # Everything running *on* the cluster (Ops layer)
-│   ├── helm/                     # Helm charts for platform components
-│   ├── kustomize/                # (optional) if you prefer Kustomize for operators
-│   ├── addons/
-│   │   ├── ingress-nginx/
-│   │   ├── cert-manager/
-│   │   ├── metrics-server/
-│   │   ├── external-dns/
-│   │   ├── argocd/
-│   │   └── logging/              # Loki, Grafana, etc
-│   └── values/                   # environment-specific overrides for platform charts
+│   ├── charts                    # Charts that for some reason needs to be locally available
+│   ├── Values/                   # Values files for the charts defined in main.tf   
+│   │   ├── argocd-values.yaml 
+│   │   ├── kgateway-values.yaml
+|   ├── main.tf                   # Defines all cluster addons/tools in the form of helm charts
