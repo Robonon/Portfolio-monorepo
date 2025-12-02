@@ -1,0 +1,23 @@
+# Ensure consistent line endings across OS
+* text=auto
+
+# Treat all shell scripts as CRLF endings
+*.sh text eol=crlf
+
+# Treat Windows batch files as CRLF
+*.bat text eol=crlf
+
+# Mark binary files so Git won't try to diff them
+*.png binary
+*.jpg binary
+*.gif binary
+*.pdf binary
+
+# Handle common code files with CRLF endings
+*.js  text eol=crlf
+*.css text eol=crlf
+*.html text eol=crlf
+*.py  text eol=crlf
+
+# Merge strategy for lock files (keep ours)
+package-lock.json merge=ours
