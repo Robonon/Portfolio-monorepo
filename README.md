@@ -86,3 +86,17 @@ repo/
 │
 ├── ci/                           # CI/CD workflows (GitHub Actions, GitLab, etc)
 └── scripts/                      # helper scripts (bootstrap, linting, local dev)
+
+
+## Commit messages
+
+Ticket id (in the future)
+- [Some-id]
+
+Action
+- '[Add]'
+- '[Update]'
+
+Full example
+
+git commit -m "[Some-Id-123][Add]: Add some feature or thing"
