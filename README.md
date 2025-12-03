@@ -50,13 +50,11 @@ resources:
 Each folder contains it's own readme, explaining details about it's content
 
 repo/
+├── apps/                         # Bussines applications
+├── docs/                         # docs for everything in the repo
+├── gitops/                       # App of apps repo used by argocd to deploy all apps or multitenant solutions
 ├── infra/                        # Terraform (cloud + cluster)
 ├── platform/                     # Everything running *on* the cluster (Ops layer)
-├── apps/                         # Applications developed by you
-├── environments/                 # GitOps definitions (if using ArgoCD/Flux)
-├── ci/                           # CI/CD workflows (GitHub Actions, GitLab, etc)
-└── scripts/                      # helper scripts (bootstrap, linting, local dev)
-
 
 ## Commit messages
 
