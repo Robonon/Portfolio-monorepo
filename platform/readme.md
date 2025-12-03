@@ -4,3 +4,17 @@
 │   │   ├── argocd-values.yaml 
 │   │   ├── kgateway-values.yaml
 |   ├── main.tf                   # Defines all cluster addons/tools in the form of helm charts
+
+
+## Terraform
+
+commands:
+- terraform init
+- terraform plan
+- terraform apply
+- terraform destory
+
+## ArgoCD
+
+commands:
+- argocd admin initial-password -n argocd

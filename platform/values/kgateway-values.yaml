@@ -60,7 +60,7 @@ controller:
   # -- Configure the controller service.
   service:
     # -- Set the service type for the controller.
-    type: NodePort
+    type: ClusterIP
     # -- Set the service ports for gRPC and health endpoints.
     ports:
       grpc: 9977
