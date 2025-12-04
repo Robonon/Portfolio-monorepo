@@ -14,7 +14,11 @@ commands:
 - terraform apply
 - terraform destory
 
-## ArgoCD
+## Services running in cluster
 
-commands:
-- argocd admin initial-password -n argocd
+- kubectl port-forward svc/gateway 8080:8000 -n kgateway-system
+
+- [argocd ui](http://argocd.localhost:8080)
+    - login: admin, get password with 'argocd admin initial-password -n argocd'
+- [gitea server](http://gitea.localhost:8080)
+    - login: gitea_admin, r8sA8CPHD9!bt6d

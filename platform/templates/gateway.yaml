@@ -1,14 +1,14 @@
 kind: Gateway
 apiVersion: gateway.networking.k8s.io/v1
 metadata:
-  name: http
+  name: gateway
   namespace: kgateway-system
 spec:
   gatewayClassName: kgateway
   listeners:
   - protocol: HTTP
-    port: 8080
-    name: http
+    port: 8000
+    name: http-listener
     allowedRoutes:
       namespaces:
         from: All

@@ -5,10 +5,10 @@ metadata:
   namespace: argocd
 spec:
   parentRefs:
-    - name: http
+    - name: gateway
       namespace: kgateway-system
   hostnames:
-    - localhost
+    - argocd.localhost
   rules:
     - matches:
         - path:
