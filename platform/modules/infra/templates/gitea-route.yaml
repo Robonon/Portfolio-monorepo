@@ -8,7 +8,7 @@ spec:
     - name: gateway
       namespace: kgateway-system
   hostnames:
-    - gitea.localhost
+    - localhost
   rules:
     - matches:
         - path:

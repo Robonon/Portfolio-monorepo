@@ -21,4 +21,9 @@ else
     CLEANUP_CLUSTER=true
 fi
 
+# Install Gateway API CRDs
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
+
 kubectl cluster-info --context kind-test-cluster
+
+docker compose -f ./docker-compose.yaml up -d

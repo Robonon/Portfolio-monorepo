@@ -1,10 +1,4 @@
-├── infra/                        # Terraform (cloud + cluster)
-│   ├── global/                   # org-level resources (DNS, accounts, S3 buckets)
-│   ├── envs/
-│   │   ├── dev/
-│   │   ├── staging/
-│   │   └── prod/
-│   └── modules/                  # Terraform reusable modules
+├── infra/                        # Clusters and resources outside the cluster
 
 
 

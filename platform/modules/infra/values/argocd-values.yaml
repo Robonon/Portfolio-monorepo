@@ -11,4 +11,4 @@ configs:
     ## Self-hosted Git repository for in gitea, used for argo app manifests
     ## <service-name>.<namespace-name>.svc.cluster.local
     gitops-repo:
-      url: http://gitea-server-http.gitea-server.svc.cluster.local:3000/gitea_admin/gitops.git
+      url: "http://host.docker.internal:3000/gitea_admin/platform-ops"

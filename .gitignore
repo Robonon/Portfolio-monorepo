@@ -422,3 +422,5 @@ FodyWeavers.xsd
 *.tfstate
 *.tfstate.backup
 **/.terraform/
+**/gitea/
+**/postgres/
