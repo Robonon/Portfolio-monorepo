@@ -1,0 +1,10 @@
+FROM golang:1.25-alpine AS build
+WORKDIR /app
+COPY . .
+RUN go build -o tenant ./main.go
+
+FROM alpine:latest AS final
+WORKDIR /app
+COPY --from=build /app/tenant .
+EXPOSE 8000
+CMD ["./tenant"]

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+</head>
+<body>
+    <form id="create-tenant-form"
+            hx-post="/api/tenants"
+            hx-target="#tenants"
+            hx-swap="innerHTML"
+            style="margin-bottom: 1em;">
+        <input type="text" name="name" placeholder="Tenant Name" required>
+        <button type="submit">Create New Tenant</button>
+    </form>
+    {{ block "tenants" . }}
+    {{ end }}
+</body>
+</html>
+
+{{ define "tenants" }}
+<div id="tenants"
+     hx-sse="message: /api/tenants/stream"
+     hx-swap="innerHTML">
+  Loading tenants...
+</div>
+{{ end }}
