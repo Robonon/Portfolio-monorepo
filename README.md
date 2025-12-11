@@ -1,5 +1,7 @@
 # Portfolio-monorepo
 
+The purpose of this repo is to experiment with cross-team, big picture concerns, how applications and infra comes together from different teams in order to develop, host and operate different business applications using kubernetes as a platform, all in one local setup
+
 ## Project ideas:
 
 - Ops ui to manage cluster and applications
@@ -52,7 +54,6 @@ Each folder contains it's own readme, explaining details about it's content
 repo/
 ├── apps/                         # Bussines applications
 ├── docs/                         # docs for everything in the repo
-├── gitops/                       # App of apps repo used by argocd to deploy all apps or multitenant solutions
 ├── infra/                        # Terraform (cloud + cluster)
 ├── platform/                     # Everything running *on* the cluster (Ops layer)
 

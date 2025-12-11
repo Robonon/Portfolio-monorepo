@@ -424,3 +424,34 @@ FodyWeavers.xsd
 **/.terraform/
 **/gitea/
 **/postgres/
+
+# Go --------------
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace and build cache
+/bin/
+/build/
+/dist/
+/coverage.out
+
+# Go modules cache (optional, usually not needed)
+go.sum
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Dependency directories (if vendoring)
+vendor/

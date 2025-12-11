@@ -6,7 +6,7 @@ metadata:
 spec:
   parentRefs:
     - name: gateway
-      namespace: kgateway-system
+      namespace: gateway
   hostnames:
     - argocd.localhost
   rules:
@@ -15,5 +15,7 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
+        - name: argocd-server
+          port: 443
         - name: argocd-server
           port: 80

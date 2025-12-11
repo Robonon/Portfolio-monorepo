@@ -1,0 +1,19 @@
+## Argo CD configuration
+## Ref: https://github.com/argoproj/argo-cd
+
+## Argo Configs
+configs:
+  params:
+    server.insecure: true
+    create: true
+  secret:
+    # bcrypt hash of 'admin'
+    argocdServerAdminPassword: $2a$12$Qmp00yYawaG6eM7czCYIsOiuCjUV5i6qrPHRwvs2dK0sSQNwMBoXi 
+  repositories: 
+    ## Self-hosted Git repository for in gitea, used for argo app manifests
+    gitops-repo:
+      url: "http://host.docker.internal:3000/company/platform-ops"
+    registry: 
+      url: "oci://host.docker.internal:5000/platform-apps"
+      type: oci
+      insecure: "true"

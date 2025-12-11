@@ -1,0 +1,25 @@
+projects:
+  platform:
+    name: platform-project
+    namespace: platform-apps
+
+repositories:
+  platform-apps-chart:
+    name: platform-apps-chart
+    url: oci://host.docker.internal:5000/platform-apps
+    project: platform-project
+    type: oci
+  docker-registry:
+    name: docker-registry
+    url: http://host.docker.internal:5000
+    project: platform-project
+    type: http
+
+applications:
+  platform:
+    name: platform-apps
+    project: platform-project
+    chart: platform-apps
+    repoURL: oci://host.docker.internal:5000/platform-apps
+    targetRevision: 0.1.1
+    namespace: platform-apps
