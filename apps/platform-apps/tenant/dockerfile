@@ -5,6 +5,7 @@ RUN go build -o tenant ./main.go
 
 FROM alpine:latest AS final
 WORKDIR /app
+COPY ./templates ./templates
 COPY --from=build /app/tenant .
 EXPOSE 8000
 CMD ["./tenant"]

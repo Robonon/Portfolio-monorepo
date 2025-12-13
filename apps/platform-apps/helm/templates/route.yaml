@@ -15,6 +15,13 @@ spec:
         - path:
             type: PathPrefix
             value: /{{ .name }}
+      # filters:
+      #   - type: URLRewrite
+      #     urlRewrite:
+      #       path:
+      #         type: ReplacePrefixMatch
+      #         replacePrefixMatch: /
+              
       backendRefs:
         - name: {{ .name }}-service
           port: {{ .port }}

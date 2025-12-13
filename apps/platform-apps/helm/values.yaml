@@ -1,5 +1,5 @@
 namespace: platform-apps
-hostname: platform-apps
+hostname: platform.apps
 
 services: 
   tenant:
@@ -10,3 +10,4 @@ services:
     config:
       GITEA_URL: http://host.docker.internal:3000
       GITEA_TOKEN: your_gitea_token_here
+      PORT: "8000"

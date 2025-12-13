@@ -67,6 +67,7 @@ func main() {
 	cfg := &Config{
 		GiteaURL:   getEnvOrDefault("GITEA_URL", "http://localhost:3000"),
 		GiteaToken: getEnvOrDefault("GITEA_TOKEN", "your_gitea_token_here"),
+		Port:       getEnvOrDefault("PORT", "8000"),
 	}
 
 	logger := log.Default()
