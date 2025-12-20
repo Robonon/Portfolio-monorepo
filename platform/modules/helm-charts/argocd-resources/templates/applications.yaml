@@ -9,6 +9,11 @@ spec:
     chart: {{ .chart }}
     repoURL: {{ .repoURL }} 
     targetRevision: {{ .targetRevision }}
+    {{- if .config }}
+    helm:
+      values: |
+{{ toYaml .config | nindent 8 }}
+    {{- end }}
   destination:
     name: "in-cluster"
     namespace: {{ .namespace }}

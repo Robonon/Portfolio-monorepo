@@ -23,3 +23,21 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+  namespace: gateway
+spec:
+  selector:
+    app: gateway
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+      name: http
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
+      name: https

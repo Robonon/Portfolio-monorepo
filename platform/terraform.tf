@@ -29,23 +29,17 @@ provider "kubernetes" {
     config_path = "~/.kube/config"
 }
 
-# provider "argocd" {
-#     server_addr = "argocd.localhost:8443"
-#     username    = "admin"
-#     password    = "admin"
-#     insecure    = true
-# }
-
 provider "gitea" {
     base_url = "http://localhost:3000"
     username = "gitea_admin"
     password = "gitea_admin"
 }
 
-# module "gitea-resources" {
-#     source = "./modules/gitea-resources" 
-# }
+module "gitea-resources" {
+    source = "./modules/gitea-resources" 
+}
 
 module "helm-charts" {
     source = "./modules/helm-charts"
+    platform_ops_repo_deploy_key = module.gitea-resources.private_key
 }

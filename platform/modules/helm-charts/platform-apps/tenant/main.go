@@ -16,6 +16,34 @@ type Config struct {
 	Port       string
 }
 
+// type (
+// 	argoCDApplication struct {
+// 		APIVersion string   `yaml:"apiVersion"`
+// 		Kind       string   `yaml:"kind"`
+// 		Metadata   metadata `yaml:"metadata"`
+// 		Spec       spec     `yaml:"spec"`
+// 	}
+// 	metadata struct {
+// 		Name       string   `yaml:"name"`
+// 		Namespace  string   `yaml:"namespace"`
+// 		Finalizers []string `yaml:"finalizers,omitempty"`
+// 	}
+// 	spec struct {
+// 		Project     string      `yaml:"project"`
+// 		Source      source      `yaml:"source"`
+// 		Destination destination `yaml:"destination"`
+// 	}
+// 	source struct {
+// 		RepoURL        string `yaml:"repoURL"`
+// 		TargetRevision string `yaml:"targetRevision"`
+// 		Path           string `yaml:"path"`
+// 	}
+// 	destination struct {
+// 		Server    string `yaml:"server"`
+// 		Namespace string `yaml:"namespace"`
+// 	}
+// )
+
 func getEnvOrDefault(key, defaultValue string) string {
 	if value, exists := os.LookupEnv(key); exists {
 		return value
@@ -54,13 +82,40 @@ func (h *tenantHandler) handler(w http.ResponseWriter, r *http.Request) {
 
 		tmpl, _ := template.ParseFiles("templates/tenant.html")
 		tmpl.Execute(w, data)
+
 	case http.MethodPost:
-		// Handle POST request (e.g., create a new tenant)
+		tenant := r.FormValue("name")
+		h.logger.Printf("Received request to create tenant: %s", tenant)
+
+		yaml := argoAppYAML(tenant, "https://gitea.example.com/company/platform-ops.git", "helm", tenant)
+
+		file := gitea.CreateFileOptions{
+			Content: yaml,
+		}
+		h.client.CreateFile("company", "platform-ops", fmt.Sprintf("tenants/%s", tenant), file)
 		http.Error(w, "POST method not implemented", http.StatusNotImplemented)
 	default:
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
+}
 
+func argoAppYAML(name, repoURL, path, namespace string) string {
+	return fmt.Sprintf(
+		`apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: %s
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: %s
+    targetRevision: HEAD
+    path: %s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: %s
+`, name, repoURL, path, namespace)
 }
 
 func main() {
@@ -73,7 +128,6 @@ func main() {
 	logger := log.Default()
 	httpClient := http.DefaultClient
 
-	logger.Println(cfg)
 	giteaClient, err := gitea.NewClient(cfg.GiteaURL, gitea.SetHTTPClient(httpClient))
 	if err != nil {
 		logger.Fatal("Failed to create Gitea client:", err)

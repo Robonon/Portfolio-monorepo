@@ -1,6 +1,5 @@
 ## Argo CD configuration
 ## Ref: https://github.com/argoproj/argo-cd
-
 ## Argo Configs
 configs:
   params:
@@ -13,7 +12,13 @@ configs:
     ## Self-hosted Git repository for in gitea, used for argo app manifests
     gitops-repo:
       url: "http://host.docker.internal:3000/company/platform-ops"
-    registry: 
-      url: "oci://host.docker.internal:5000/platform-apps"
-      type: oci
-      insecure: "true"
+
+repoServer:
+  env:
+    - name: ARGOCD_HELM_OCI_ALLOW_INSECURE
+      value: "true"
+
+controller:
+  env:
+    - name: ARGOCD_HELM_OCI_ALLOW_INSECURE
+      value: "true"

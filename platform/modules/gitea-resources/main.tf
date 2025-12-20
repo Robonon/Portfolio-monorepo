@@ -6,30 +6,19 @@ terraform {
         }
     }
 }
-
-data "gitea_org" "company_data" {
-  name = "company"
+data "gitea_repo" "platform_ops_repo" {
+  username = "company"
+  name  = "platform-ops"
 }
 
-resource "gitea_org" "company" {
-  name = data.gitea_org.company_data.name
+resource "tls_private_key" "platform_ops_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
 
-resource "gitea_team" "platform_team" {
-#   depends_on = [ gitea_org.company ]
-  name         = "platform"
-  organisation = data.gitea_org.company_data.name
-  description  = "Platform Team"
-  permission   = "owner"
-}
-
-resource "gitea_repository" "platform_ops" {
-  depends_on = [ gitea_org.company ]
-  username     = data.gitea_org.company_data.name
-  name         = "platform-ops"
-  private      = false
-  issue_labels = "Default"
-  lifecycle {
-    prevent_destroy = false
-  }
+resource "gitea_repository_key" "platform_ops_key" {
+  title = "platform-ops-deploy-key"
+  key = tls_private_key.platform_ops_key.public_key_openssh
+  read_only = false
+  repository = data.gitea_repo.platform_ops_repo.id
 }

@@ -7,7 +7,7 @@
 </head>
 <body>
     <form id="create-tenant-form"
-            hx-post="/api/tenants"
+            hx-post="/tenant"
             hx-target="#tenants"
             hx-swap="innerHTML"
             style="margin-bottom: 1em;">
@@ -23,6 +23,6 @@
 <div id="tenants"
      hx-sse="message: /api/tenants/stream"
      hx-swap="innerHTML">
-  Loading tenants...
+  No tenants created
 </div>
 {{ end }}

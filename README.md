@@ -53,9 +53,8 @@ Each folder contains it's own readme, explaining details about it's content
 
 repo/
 ├── apps/                         # Bussines applications
-├── docs/                         # docs for everything in the repo
-├── infra/                        # Terraform (cloud + cluster)
-├── platform/                     # Everything running *on* the cluster (Ops layer)
+├── infra/                        # Cluster setup and external resources
+├── platform/                     # Everything running in the cluster (Ops layer)
 
 ## Commit messages
 

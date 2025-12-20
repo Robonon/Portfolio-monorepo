@@ -12,5 +12,7 @@ stringData:
   project: {{ .project }}
   type: {{ .type }}
   insecure: "true"
+  # forceHttpBasicAuth: "true"
+  # enableOCI: "true"
 ---
 {{- end}}
